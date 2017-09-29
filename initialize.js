@@ -1,14 +1,5 @@
 
 //== Main Initialization ==\\
-var interactionMode="keyboard";
-try{
-	document.createEvent("TouchEvent");
-	interactionMode="mobile";
-	STAGE_WIDTH=window.innerWidth;
-	STAGE_HEIGHT=window.innerHeight;
-}catch(e){
-	interactionMode="keyboard";
-}
 var app = new PIXI.Application(STAGE_WIDTH,STAGE_HEIGHT,{backgroundColor:0xeeeeee});
 document.getElementById("game-canvas").append(app.view);
 
@@ -16,11 +7,6 @@ document.getElementById("game-canvas").append(app.view);
 var mouseObjects=new Array();
 //var mouse=app
 var mouse={x:0,y:0,down:false};
-var keyCodes={left:"a",right:"d"};
-var keyStates={left:false,right:false};
-var NO_SPAWN=false;
-var NO_STARS=false;
-var NO_FIREWORKS=false;
 
 //keybard, mobile, mouse
 
@@ -66,9 +52,6 @@ function resetMouse(){
 	//mouseDown=false;
 }
 function onMouseDown(e){
-	//traceProperties(app.renderer);
-	//trace(e.pointerId);
-
 	var mouseObject=mouseObject_constructor();
 	mouseObject.id=e.pointerId;
 	mouseObject.down=true;
@@ -76,17 +59,11 @@ function onMouseDown(e){
 	if (mouseObject.drag!=null) game_putFirst(mouseObject.drag);
 	mouseObjects.push(mouseObject);
 	mouse.down=true;
-
-	//trace(e.target.cursor=="pointer");
-//	traceProperties(e);
-//	trace(e.type);
 }
 
 function onMouseUp(e){
-	//if (interactionMode=="keyboard") return;
 	for (var i=0;i<mouseObjects.length;i+=1){
 		if (mouseObjects[i].id==e.pointerId){
-			//onKeyUp(mouseObjects[i]);
 			mouseObjects.splice(i,1);
 			return;
 		}
@@ -103,28 +80,12 @@ function onMouseMove(e){
 			_box.pullTo(e.x,e.y);
 		}
 	}
-	//trace(e.tiltX+" "+e.screenX+" "+e.pageX+" "+e.clientX+" "+e.layerX);
-	//	trace(i);
-	
-	//trace(e.list);
 }
 
 function onKeyDown(e){
-	switch(e.key){
-		case keyCodes.left: keyStates.left=true; break;
-		case keyCodes.right: keyStates.right=true; break;
-		case "p": NO_SPAWN=!NO_SPAWN; break;
-	}
-	//traceProperties(e);
-	//trace(e.key);
-	//trace("key pressed")
 }
 
 function onKeyUp(e){
-	switch(e.key){
-		case keyCodes.left: keyStates.left=false; break;
-		case keyCodes.right: keyStates.right=false; break;
-	}
 }
 
 function mouseObject_constructor(){
@@ -139,6 +100,3 @@ function mouseObject_constructor(){
 
 	return m;
 }
-
-//var key={};
-//key.code=keyCode;
